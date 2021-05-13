@@ -25,7 +25,7 @@ from acme.utils.loggers import base
 from custom_env_wrappers import CustomSinglePrecisionWrapper, ImgFlatObsWrapper
 from gym_minigrid.wrappers import FullyObsWrapper
 
-WANDB_PROJECT_PATH = 'kmeco/offline-rl/{}:{}'
+# WANDB_PROJECT_PATH = 'kmeco/offline-rl/{}:{}'
 
 
 def _build_custom_loggers(wb_client):
@@ -291,7 +291,7 @@ def preprocess_dataset(dataset: tf.data.Dataset, batch_size: int, n_step_returns
 
 def load_wb_model(model_name: str, model_tag: str, dir:str='network'):
   wb_run = wandb.init()
-  wb_path = WANDB_PROJECT_PATH.format(model_name, model_tag)
+  wb_path = os.environ['WANDB_PROJECT_PATH'].format(model_name, model_tag)
   logging.info("Downloading model artifact from: " + wb_path)
   artifact = wb_run.use_artifact(wb_path, type='model')
   download_dir = artifact.download()
